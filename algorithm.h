@@ -53,10 +53,10 @@ template<class RandomAccessIterator, class Compare>
       Compare comp) {
     /// @todo Implement Bubble sort
     size_t s = std::distance(first,last);	// finds the size of the sequence by taking the difference between the first and last iterators
-    for(int i = 0;i < s;++i)			// for every element in the sequence
+    for(size_t i = 0;i < s;++i)			// for every element in the sequence
     {
 	RandomAccessIterator prec = first;	// set the predecessor iterator to the first element in the sequence 
-	for(int j = 1;j < s-i;++j)		// for every element not already checked in the sequence (size - elements already checked)
+	for(size_t j = 1;j < s-i;++j)		// for every element not already checked in the sequence (size - elements already checked)
 	{
 		RandomAccessIterator succ = prec;	// sets the successor iterator
  		++succ;					// to be one element after the predecessor iterator
