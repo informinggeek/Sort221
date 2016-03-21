@@ -29,6 +29,9 @@ namespace mystl {
 template<typename T>
   void swap(T& a, T& b) {
     /// @todo Implement swapping values
+    T c = a; // Create a dummy variable
+    a = b; // Swap A and B
+    b = c; // Use the dummy C to finish swapping
   }
 
 ////////////////////////////////////////////////////////////////////////////////
