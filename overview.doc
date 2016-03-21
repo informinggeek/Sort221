@@ -1,0 +1,104 @@
+//******************************************************************************
+// This section is the main page of the HTML and the first chapter in LaTeX.
+//******************************************************************************
+
+/**
+ * \mainpage Overview
+ *
+ * \section overview Overview
+ * Assignment 3 focuses on implementation of sorting algorithms. Different from
+ * class however, you will be implementing algorithms in a similar fashion to
+ * the c++ stl, i.e., using iterators. As such, remember to look
+ * <a href="http://www.cplusplus.com/reference/algorithm/sort/">here</a> if you are
+ * confused on how certain operations are performed before posting a question to
+ * piazza.
+ *
+ * Essentially, this assignment mainly focuses on implementation, but you must
+ * turn in a report as well. The report focuses on analyzing Big-Oh and
+ * performance of your sorting algorithms.
+ *
+ * If you have questions, or if something is unclear, please post on piazza.
+ *
+ * \section Programming Assignment
+ * In this assignment, you need to implement all items which can be found under
+ * <a href="todo.html">todos</a>, which is essentially swap, bubble sort, one
+ * slow sort and one fast sorting algorithm.
+ *
+ * The options for slow sort are (choose one):
+ * - Insertion Sort (in place)
+ * - Selection Sort (in place)
+ *
+ * The options for fast sort are (choose one):
+ * - Heap Sort (in place)
+ * - Merge Sort
+ * - Quick Sort (in place)
+ *
+ * In addition, you will modify timing.cpp to analyze your solutions on the
+ * following types of input:
+ * - Random
+ * - Already sorted
+ * - Reverse sorted
+ * - A few unique elements
+ *
+ * After completing, feel free to remove each doxygen todo statement from the
+ * code, this way you can keep track!
+ *
+ * Unit testing is provided to aid you in determining if your implementation is
+ * correct, however, note the tests are not exhaustive! If all tests are
+ * reported to pass, this is only part of the process. If you are not convinced
+ * your code is correct, please add more tests.
+ *
+ * \section Code Checkpoint
+ * For the code check-point complete the Bubble sort algorithm and one slow sort
+ * algorithm. 
+ *
+ * \section Report
+ * Your report will include the objective of the assignment, a brief description
+ * of your implementation and experiments, and discussion of your results. At a
+ * minimum, your report should include the following sections:
+ * - <b>Introduction</b>. In this section, state or describe the objective of
+ *   the assignment, a statement about what you learned in the assignment, and a
+ *   statement summarizing your results.
+ * - <b>Implementation details</b>. Give a brief description of how you
+ *   implemented the assignment, including what you learned.
+ * - <b>Theoretical analysis</b>. In this section, you should provide an
+ *   analysis of and theoretical discussion (i.e Big-Oh) for each sorting
+ *   algorithm you compare (which is at least bubble, one of
+ *   insertion/selection, and one of heap/merge/quick). Please provide analysis
+ *   on four types of input: random, sorted, reverse sorted, and a few unique
+ *   elements.
+ * - <b>Experimental Setup</b>. In this section, you should provide a
+ *   description of your experiment setup, which includes but is not limited to
+ *   Machine specification, i.e., processor type, amount of ram, OS, etc.
+ * - <b>Results & Discussion</b>. In this section, you will experiment in
+ *   sorting n elements (preferably from a vector). You will compare your sorts
+ *   on the above mentioned data sequences. timing.cpp shows how to generate a
+ *   sequence of n random items. Include and discuss the following plots:
+ *     -# Plot input size vs. time, i.e., time per sort operation on the various
+ *     algorithms and data sequences (please organize your plots appropriately).
+ *     -# Plot input size vs. time/expected time to determine the Big-Oh
+ *     constants on sorting of random data only.
+ *   For operations which take O(n^2) test at least the following input sizes:
+ *   2^1, ..., 2^15. For operations which take O(log n) test at least the
+ *   following input sizes: 2^1, ..., 2^20 (use what is setup for you in
+ *   timing.cpp).
+ *
+ *   For plot discussions think of this: what is presented in each plot (i.e.,
+ *   explain the data), what conclusion to do see from the data (i.e., learn
+ *   from the data), and connect the data back to your theoretical discussion.
+ * - <b>Conclusion</b>. Summarize the results found in the experiment.
+ *
+ * \section bonus Bonus
+ * Each extra sorting algorithm you implement and compare with in your report
+ * will earn you bonus points. 5 points per extra algorithm implementation and 5
+ * points for each extra analysis. So in total you can earn 40 more points. (The
+ * other one of insertion/selection, the other two of heap/merge/quick, and
+ * radix sort.
+ *
+ * \section components Code Components
+ * - \ref MySTL - Core library containers, i.e., map.
+ *
+ * - \ref Testing - Classes and utilities for unit testing MySTL.
+ *
+ * - \ref timing.cpp - File to use for timing experiments for report.
+ **/
