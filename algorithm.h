@@ -85,6 +85,26 @@ template<class RandomAccessIterator, class Compare>
 template<class RandomAccessIterator, class Compare>
   void selection_sort(RandomAccessIterator first, RandomAccessIterator last,
       Compare comp) {
+      
+    RandomAccessIterator unsortedFirst; // This is the iterator we will change to find the min
+    RandomAccessIterator min;
+    
+    while(first != last) { // Going through the whole list
+      min = first; // Start out assuming that the first element is the min
+      unsortedFirst = first; 
+      unsortedFirst++; // We don't need to compare the first element to itself
+      
+      while(unsortedFirst != last) { // Going through the unsorted list finding the new min as we go
+        if(comp(*unsortedFirst,*min)) // Comparing previous min element to the current element
+          min = unsortedFirst; // If the current element is smaller than the current min, change the pointers
+        unsortedFirst++; // Continue going through the unsorted list
+      }
+      
+      if(min != first) // Compare the possibly new min to the assumed min from before (the first element)
+        swap(*min,*first); // If the first element is not the correct min, then switch the elements
+      first++; // Increase the unsorted front
+    }
+    
   }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -125,6 +145,7 @@ template<class RandomAccessIterator, class Compare>
   void slow_sort(RandomAccessIterator first, RandomAccessIterator last,
       Compare comp) {
     /// @todo Call your slow sort of choice
+    selection_sort(first, last, comp);
   }
 
 ////////////////////////////////////////////////////////////////////////////////
