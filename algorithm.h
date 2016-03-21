@@ -16,6 +16,7 @@
 #ifndef _ALGORITHM_H_
 #define _ALGORITHM_H_
 
+#include <iostream>
 #include <limits>
 #include <vector>
 
@@ -51,7 +52,22 @@ template<class RandomAccessIterator, class Compare>
   void bubble_sort(RandomAccessIterator first, RandomAccessIterator last,
       Compare comp) {
     /// @todo Implement Bubble sort
+    size_t s = std::distance(first,last);	// finds the size of the sequence by taking the difference between the first and last iterators
+    for(int i = 0;i < s;++i)			// for every element in the sequence
+    {
+	RandomAccessIterator prec = first;	// set the predecessor iterator to the first element in the sequence 
+	for(int j = 1;j < s-i;++j)		// for every element not already checked in the sequence (size - elements already checked)
+	{
+		RandomAccessIterator succ = prec;	// sets the successor iterator
+ 		++succ;					// to be one element after the predecessor iterator
+		if(comp(*succ,*prec))			// if the successor element is less than the predecessor element
+		{
+			swap(*prec,*succ);		// swap the elements
+		}
+		++prec;					// increment the predecessor element, and begin again
+	}
   }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief Sort the range [first, last) into nondecreasing order
