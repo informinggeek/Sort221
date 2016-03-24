@@ -123,6 +123,24 @@ template<class RandomAccessIterator, class Compare>
 template<class RandomAccessIterator, class Compare>
   void insertion_sort(RandomAccessIterator first, RandomAccessIterator last,
       Compare comp) {
+    /*  
+      RandomAccessIterator tempfirst;
+      RandomAccessIterator sorting;
+      RandomAccessIterator sortingprev;
+      
+      while(tempfirst != last) {
+        sorting = tempfirst;
+        sortingprev = sorting--;
+        
+        while((sorting != first) && comp(*sortingprev,*sorting)) {
+          swap(*sortingprev,*sorting);
+          sorting--;
+          sortingprev--;
+        }
+        
+        tempfirst++;
+      }
+      */
   }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -164,6 +182,25 @@ template<class RandomAccessIterator, class Compare>
 template<class RandomAccessIterator, class Compare>
   void heap_sort(RandomAccessIterator first, RandomAccessIterator last,
       Compare comp) {
+      
+      RandomAccessIterator tempfirst;
+      RandomAccessIterator templast;
+      RandomAccessIterator max;
+      
+      while(last != first) { // Go through the entire list
+        tempfirst = first; // Reset tempfirst every time
+        templast = last--; // This also decrements last so we don't have to later
+        max = tempfirst; // Reset max
+        
+        while(tempfirst != templast) { // Go from the front of the list to the beginning of the "heap"
+          if(comp(*max,*tempfirst)) // Using the name max assuming that we want nondecreasing order
+            max = tempfirst; // Change the max as we go along
+          tempfirst++; // Increment tempfirst
+        }
+        
+        swap(*last,*max); // Make the last element the greatest
+      }
+      
   }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -222,6 +259,7 @@ template<class RandomAccessIterator, class Compare>
   void sort(RandomAccessIterator first, RandomAccessIterator last,
       Compare comp) {
     /// @todo Call your fast sort of choice
+    heap_sort(first,last,comp);
   }
 
 ////////////////////////////////////////////////////////////////////////////////
