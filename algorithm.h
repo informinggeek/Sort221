@@ -216,9 +216,43 @@ template<class RandomAccessIterator, class Compare>
 ///             defines.
 ///
 /// Merge Sort.
+
+
+// *** Nathan: Here is where I am having trouble. Merge does not sort properly, and I can not figure out why.
+// *** I have not tested it yet, but writing a sequence down on paper yields the error.
+
+template<class RandomAccessIterator, class Compare>
+void merge(RandomAccessIterator leftfirst, RandomAccessIterator leftlast,
+RandomAccessIterator rightfirst, RandomAccessIterator rightlast, Compare comp) {
+	while(rightfirst != rightlast)
+	{
+		if(comp(*leftfirst,*righfirst))		// if the left element meets the comparison requirements for the right element
+		{
+			swap(*leftfirst,*rightfirst);	// swap the elements
+			leftfirst++; 
+		}
+		else
+		{
+			rightfirst++;			// swap the elements and move to the next element in the right sequence
+		}
+		if(leftfirst == rightfirst)
+		{
+			rightfirst++;
+		}
+	}
+}
 template<class RandomAccessIterator, class Compare>
   void merge_sort(RandomAccessIterator first, RandomAccessIterator last,
       Compare comp) {
+	if(size > 1)
+	{
+		return;
+     	}
+	size_t s = std::distance(first,last);	// finds the size of the sequence by taking the difference between the first and last iterators
+	size_t middle = begin+s/2;
+	merge_sort(first,middle,comp);
+	merge_sort(middle,last,comp);
+	merge(first,middle,middle,last,comp);
   }
 
 ////////////////////////////////////////////////////////////////////////////////
