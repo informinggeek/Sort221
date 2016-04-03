@@ -11,6 +11,8 @@
 ///       - Merge Sort
 ///       - Quick Sort (in place)
 /// @bonus Each extra sort you implement will be worth bonus points
+///
+/// By Thomas Step and Nathan Powell
 ////////////////////////////////////////////////////////////////////////////////
 
 #ifndef _ALGORITHM_H_
@@ -19,6 +21,9 @@
 #include <iostream>
 #include <limits>
 #include <vector>
+
+#include <ctime> // time
+#include <functional> // mod
 
 namespace mystl {
 
@@ -123,24 +128,47 @@ template<class RandomAccessIterator, class Compare>
 template<class RandomAccessIterator, class Compare>
   void insertion_sort(RandomAccessIterator first, RandomAccessIterator last,
       Compare comp) {
-    /*  
-      RandomAccessIterator tempfirst;
+     
+      RandomAccessIterator tempfirst = first;
       RandomAccessIterator sorting;
       RandomAccessIterator sortingprev;
+      RandomAccessIterator counting;
       
-      while(tempfirst != last) {
+      while(tempfirst != last) { // Going up the list checking order
+      
+      
+      
         sorting = tempfirst;
-        sortingprev = sorting--;
+        sorting++;
         
-        while((sorting != first) && comp(*sortingprev,*sorting)) {
-          swap(*sortingprev,*sorting);
-          sorting--;
+        if(comp(*sorting,*tempfirst)) { // Compare and possibly switch the tempfirst element with its next element
+          if(sorting != last)
+            swap(*sorting,*tempfirst);
+          sorting = tempfirst;
+          sortingprev = sorting;
           sortingprev--;
+
+          while(sorting != first) { // Checking fit with all previous elements
+            if(comp(*sorting,*sortingprev))
+              swap(*sorting,*sortingprev); 	// Putting the newly sorted element where it needs
+            sorting--;						// to be in comparison with the previously sorted elements
+            if(sorting != first) // Case where we reach the beginning of the list
+              sortingprev--;
+              
+            counting = first;
+    		while(counting != last) {
+      			std::cout<<*counting;
+      			counting++;
+   	 		}
+			std::cout<<std::endl;
+          }
+         
         }
-        
+
         tempfirst++;
+        
       }
-      */
+      
   }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -163,7 +191,7 @@ template<class RandomAccessIterator, class Compare>
   void slow_sort(RandomAccessIterator first, RandomAccessIterator last,
       Compare comp) {
     /// @todo Call your slow sort of choice
-    selection_sort(first, last, comp);
+    insertion_sort(first, last, comp);   
   }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -193,7 +221,7 @@ template<class RandomAccessIterator, class Compare>
         max = tempfirst; // Reset max
         
         while(tempfirst != templast) { // Go from the front of the list to the beginning of the "heap"
-          if(comp(*max,*tempfirst)) // Using the name max assuming that we want nondecreasing order
+          if(comp(*max,*tempfirst)) // Using the name max (name assumes that we want nondecreasing order)
             max = tempfirst; // Change the max as we go along
           tempfirst++; // Increment tempfirst
         }
@@ -219,6 +247,7 @@ template<class RandomAccessIterator, class Compare>
 template<class RandomAccessIterator, class Compare>
   void merge_sort(RandomAccessIterator first, RandomAccessIterator last,
       Compare comp) {
+  
   }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -237,6 +266,54 @@ template<class RandomAccessIterator, class Compare>
 template<class RandomAccessIterator, class Compare>
   void quick_sort(RandomAccessIterator first, RandomAccessIterator last,
       Compare comp) {
+/*    std::srand(std::time(0));
+    size_t rand = std::rand(); // Random variable
+    size_t s = std::distance(first,last);	// finds the size of the sequence by taking the difference between the first and last iterators
+    rand = rand%s; // This will give us a random iterator to pivot off of
+        
+    RandomAccessIterator pivot = first;
+    for(size_t i = 0;i<rand;i++) {
+      pivot++; // Results in a random pivot
+    }
+    Not doing random pivot using the last element as a pivot. As seen in the book.
+*/   
+	
+    RandomAccessIterator i = first;
+    RandomAccessIterator j = last;
+    j--; // The pointer to the last element; the pivot
+    RandomAccessIterator pivot = j;
+    j--; // The pointer to the second to last element
+    
+    if(std::distance(i,j)<=0) return; // Stopping case for recursion
+    
+    while(std::distance(i,j)>0) { // While the pointers haven't overlapped
+      while(comp(*i,*pivot) && std::distance(i,j)>0) { // i goes right until it finds an element bigger than pivot
+        i++;
+        //std::cout<<*i<<std::endl;
+      }
+      while(comp(*pivot,*j) && std::distance(i,j)>0) { // j goes left until it finds an element less than pivot
+        j--;
+        //std::cout<<*j<<std::endl;
+      }
+      if(*i < *j) // This should be the case anyway
+        swap(*i,*j);
+    }
+    swap(*i,*pivot); // Put pivot at i
+    RandomAccessIterator qs1 = i;
+    RandomAccessIterator qs2 = i;
+    qs1--;
+    qs2++;
+    
+    RandomAccessIterator counting = first;
+    while(counting != last) {
+      std::cout<<*counting;
+      counting++;
+    }
+	std::cout<<std::endl;
+    
+	quick_sort(first, qs1, comp);
+    quick_sort(qs2, last, comp);
+      
   }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -259,7 +336,7 @@ template<class RandomAccessIterator, class Compare>
   void sort(RandomAccessIterator first, RandomAccessIterator last,
       Compare comp) {
     /// @todo Call your fast sort of choice
-    heap_sort(first,last,comp);
+   // quick_sort(first,last,comp);
   }
 
 ////////////////////////////////////////////////////////////////////////////////
