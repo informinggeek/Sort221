@@ -191,7 +191,8 @@ template<class RandomAccessIterator, class Compare>
   void slow_sort(RandomAccessIterator first, RandomAccessIterator last,
       Compare comp) {
     /// @todo Call your slow sort of choice
-    insertion_sort(first, last, comp);   
+    //insertion_sort(first, last, comp);   
+	selection_sort(first,last,comp);
   }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -246,45 +247,83 @@ template<class RandomAccessIterator, class Compare>
 /// Merge Sort.
 
 
-// *** Nathan: Here is where I am having trouble. Merge does not sort properly, and I can not figure out why.
-// *** I have not tested it yet, but writing a sequence down on paper yields the error.
-
-template<class RandomAccessIterator, class Compare>
-void merge(RandomAccessIterator leftfirst, RandomAccessIterator leftlast,
+template<class RandomAccessIterator, class Compare, typename T>
+std::vector<T> merge(RandomAccessIterator leftfirst, RandomAccessIterator leftlast,
 RandomAccessIterator rightfirst, RandomAccessIterator rightlast, Compare comp) {
+	/*RandomAccessIterator f = leftfirst;
+	RandomAccessIterator ll = leftlast-1;
+	RandomAccessIterator l = rightlast-1;
+	std::cout<<"leftfirst: "<<*leftfirst<<" rightfirst: "<<*rightfirst<<std::endl;
+	std::cout<<"leftlast: "<<*(ll)<<" rightlast: "<<*(l)<<std::endl;
+	std::cout<<comp(*rightfirst,*leftfirst)<<std::endl;
 	while(rightfirst != rightlast)
 	{
-		if(comp(*leftfirst,*righfirst))		// if the left element meets the comparison requirements for the right element
+		if(comp(*rightfirst,*leftfirst))		// if the left element meets the comparison requirements for the right element
 		{
 			swap(*leftfirst,*rightfirst);	// swap the elements
+			std::cout<<"New leftfirst: "<<*leftfirst<<std::endl;
+			RandomAccessIterator check = rightfirst;
+			RandomAccessIterator check2 = check+1;
+			while(comp(*check2,*check) && check2 != rightlast)
+			{
+				swap(*check,*check2);
+				check++;
+				check2++;
+			}
 			leftfirst++; 
 		}
 		else
 		{
-			rightfirst++;			// swap the elements and move to the next element in the right sequence
-		}
-		if(leftfirst == rightfirst)
-		{
-			rightfirst++;
+			rightfirst++;			// move to the next element in the right sequence
 		}
 	}
+	std::cout<<"first after merge: "<<*f<<std::endl;
+	std::cout<<"last after merge: "<<*(l)<<std::endl;*/
+	std::vector<T> v;
+	while(leftfirst!=leftlast && rightfirst!=rightlast)
+	{
+		if(comp(*rightfirst,*leftfirst))
+		{
+			v.push_back(*rightfirst);
+			rightfirst++;
+		}
+		else
+		{
+			v.push_back(*leftfirst);
+			leftfirst++;
+		}
+	}
+	while(leftfirst!=leftlast)
+	{
+		v.push_back(*leftfirst);
+		leftfirst++;
+	}
+	while(rightfirst!=rightlast)
+	{
+		v.push_back(*rightfirst);
+		rightfirst++;
+	}
+	return v;
 }
 template<class RandomAccessIterator, class Compare>
   void merge_sort(RandomAccessIterator first, RandomAccessIterator last,
       Compare comp) {
-<<<<<<< HEAD
-	if(size > 1)
+	size_t s = std::distance(first,last);	// finds the size of the sequence by taking the difference between the first and last iterators
+	RandomAccessIterator middle = first+s/2;
+	if(first == middle)
 	{
 		return;
      	}
-	size_t s = std::distance(first,last);	// finds the size of the sequence by taking the difference between the first and last iterators
-	size_t middle = begin+s/2;
 	merge_sort(first,middle,comp);
 	merge_sort(middle,last,comp);
-	merge(first,middle,middle,last,comp);
-=======
-  
->>>>>>> 5f21577900b2f96605e343c3d80cd7b4e8f2d18e
+	typedef typename RandomAccessIterator::value_type T;
+	std::vector<T> v = merge<RandomAccessIterator,Compare,T>(first,middle,middle,last,comp);
+	size_t i = 0;
+	for(auto k = first; k != last; ++k)
+	{
+		*k = v[i];
+		++i;
+	}
   }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -374,6 +413,7 @@ template<class RandomAccessIterator, class Compare>
       Compare comp) {
     /// @todo Call your fast sort of choice
    // quick_sort(first,last,comp);
+	merge_sort(first,last,comp);
   }
 
 ////////////////////////////////////////////////////////////////////////////////
